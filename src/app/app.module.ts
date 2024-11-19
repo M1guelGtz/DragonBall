@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module'; // Asegúrate de importar el módulo de routing
+import { AppRoutingModule } from './app-routing.module';
 import { TransformationComponent } from '../app/Modules/transformations/transformations/transformations.component';
 
 @NgModule({
