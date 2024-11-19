@@ -1,0 +1,8 @@
+#card{
+    display: flex;
+    justify-content: center;
+    
+}
+#img_haracter{
+    width: 100px;
+}
