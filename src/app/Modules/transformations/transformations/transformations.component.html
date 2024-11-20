@@ -1,6 +1,7 @@
 <div class="carousel-container">
     <div class="carousel">
-      <button (click)="changeCharacter(name!)">next</button>
+      <button [disabled]="prevLock" (click)="changeCharacterPrev(name!)">prev</button>
+      <button [disabled]="nextLock" (click)="changeCharacterNext(name!)">next</button>
     </div>
     <div class="transformations-cards">
       <div *ngFor="let transformation of transformations()" class="card">

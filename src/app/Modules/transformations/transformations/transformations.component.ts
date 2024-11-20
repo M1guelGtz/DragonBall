@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, Signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TransformationsService } from '../../../Services/transformations.service';
@@ -12,6 +12,8 @@ export class TransformationComponent implements OnInit {
   personajes: string[]=['goku', 'vegeta', 'piccolo', 'freezer', 'zarbon', 'gohan']
   currentCharacter!: string;
   editForm: FormGroup;
+  prevLock: boolean = false
+  nextLock : boolean = false
   constructor(
     private router: ActivatedRoute,
     private transformationsService: TransformationsService,
@@ -41,13 +43,27 @@ export class TransformationComponent implements OnInit {
 
   
 
-  changeCharacter(character: string): void {
+  changeCharacterNext(character: string): void {
+    this.prevLock = false
     this.personajes.map( (characterName, index) => {
       if(characterName == this.name ){
-        console.log(this.name);
-        console.log(this.personajes[index], index);
-        console.log(this.personajes[index+1]);
-        this.route.navigate(["transformations/" + this.personajes[index+1]])
+        index > character.length -1 ? this.nextLock=true: this.nextLock=false
+        if(index < this.personajes.length - 1){
+          this.route.navigate(["transformations/" + this.personajes[index+1]])
+        }
+      }
+    })
+    this.currentCharacter = character;
+  }
+  changeCharacterPrev(character: string): void {
+    this.nextLock=false
+    this.personajes.map( (characterName, index) => {
+      if(characterName == this.name ){
+        console.log(index);
+        index < 1 ? this.prevLock=true: this.prevLock=false
+        if(index > 0){
+          this.route.navigate(["transformations/" + this.personajes[index -1]])
+        }
       }
     })
     this.currentCharacter = character;

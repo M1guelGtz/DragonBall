@@ -1,3 +1,13 @@
 <div id="card">
-    <img [src]="Character.image " alt="" id="img_haracter">
+    <div id="IMG">
+        <img [src]="Character.image " alt="" id="img_haracter">
+    </div>
+    <div id="info">
+        <span>Name: {{Character.name}} </span>
+        <span> {{Character.affiliation}} </span>
+        <!--<span> {{Character.description}} </span>-->
+        <span> Gender: {{Character.gender}} </span>
+        <span>Ki: {{Character.ki}} </span>
+        <span>Race: {{Character.race}} </span>
+    </div>
 </div>
