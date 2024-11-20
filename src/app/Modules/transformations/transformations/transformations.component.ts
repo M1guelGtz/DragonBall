@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, Signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TransformationsService } from '../../../Services/transformations.service';
 
 @Component({
@@ -8,51 +9,47 @@ import { TransformationsService } from '../../../Services/transformations.servic
   styleUrls: ['./transformations.component.css']
 })
 export class TransformationComponent implements OnInit {
-  transformations: { [key: string]: any[] } = {
-    goku: [],
-    vegeta: [],
-    cell: [],
-    gohan: [],
-    freezer: []
-  };
-
-  currentCharacter: string = 'goku';
-
+  personajes: string[]=['goku', 'vegeta', 'piccolo', 'freezer', 'zarbon', 'gohan']
+  currentCharacter!: string;
   editForm: FormGroup;
-  
   constructor(
+    private router: ActivatedRoute,
     private transformationsService: TransformationsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: Router
   ) {
     this.editForm = this.fb.group({
       ki: ['', [Validators.required, Validators.pattern('^[0-9a-zA-Z. ]+$')]],
     });
   }
-
+  name: string | null = null
   ngOnInit(): void {
+    this.name = this.router.snapshot.paramMap.get('name')
+    this.currentCharacter = this.name ?? 'goku'
     this.transformationsService.getTransformations().subscribe({
       next: (data) => {
         this.filterTransformations(data);
+
       },
       error: (err) => {
         console.error('Error al obtener las transformaciones:', err);
       }
     });
+    
   }
+  
 
-  private filterTransformations(data: any[]): void {
-    this.transformations['goku'] = data.filter(t => t.name.toLowerCase().includes('goku'));
-    this.transformations['vegeta'] = data.filter(t => t.name.toLowerCase().includes('vegeta'));
-    this.transformations['cell'] = data.filter(t => [19, 20, 21].includes(t.id));
-    this.transformations['gohan'] = data.filter(t => t.name.toLowerCase().includes('gohan'));
-    this.transformations['freezer'] = data.filter(t => t.name.toLowerCase().includes('freezer'));
-  }
-
-  public getTransformations(character: string): any[] {
-    return this.transformations[character];
-  }
+  
 
   changeCharacter(character: string): void {
+    this.personajes.map( (characterName, index) => {
+      if(characterName == this.name ){
+        console.log(this.name);
+        console.log(this.personajes[index], index);
+        console.log(this.personajes[index+1]);
+        this.route.navigate(["transformations/" + this.personajes[index+1]])
+      }
+    })
     this.currentCharacter = character;
   }
 
@@ -60,4 +57,15 @@ export class TransformationComponent implements OnInit {
     transformation.ki = this.editForm.value.ki;
     console.log(`Ki actualizado para ${transformation.name}: ${transformation.ki}`);
   }
+
+
+  transformations = signal<any[]>([]);
+
+  filterTransformations(data: any[]): void {
+    this.transformations.set(
+      data.filter(t => t.name.toLowerCase().includes(this.name?.toLowerCase()))
+    );
+  }
 }
+
+

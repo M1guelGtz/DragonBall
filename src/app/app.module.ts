@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
+import { CharactersModule } from './Modules/characters/characters.module';
 import { AppRoutingModule } from './app-routing.module';
 import { TransformationComponent } from '../app/Modules/transformations/transformations/transformations.component';
 
@@ -13,9 +14,11 @@ import { TransformationComponent } from '../app/Modules/transformations/transfor
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    CharactersModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

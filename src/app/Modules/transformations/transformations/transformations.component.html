@@ -1,22 +1,14 @@
 <div class="carousel-container">
-    <!-- Carrusel de personajes (Mostrar solo una vez los botones) -->
     <div class="carousel">
-      <button *ngFor="let character of ['goku', 'vegeta', 'cell', 'gohan', 'freezer']" 
-              (click)="changeCharacter(character)">
-        {{ character | titlecase }}
-      </button>
+      <button (click)="changeCharacter(name!)">next</button>
     </div>
-  
-    <!-- Mostrar las transformaciones del personaje actual -->
     <div class="transformations-cards">
-      <!-- Solo se muestra las transformaciones del personaje actual -->
-      <div *ngFor="let transformation of getTransformations(currentCharacter)" class="card">
+      <div *ngFor="let transformation of transformations()" class="card">
         <img [src]="transformation.image" alt="{{ transformation.name }}" class="card-img" />
         <div class="card-body">
           <h3>{{ transformation.name }}</h3>
           <p><strong>Ki:</strong> {{ transformation.ki }}</p>
   
-          <!-- Formulario para editar el Ki -->
           <form [formGroup]="editForm" (ngSubmit)="saveKi(transformation)">
             <label for="ki">Editar Ki:</label>
             <input id="ki" formControlName="ki" type="text" [value]="transformation.ki" />
