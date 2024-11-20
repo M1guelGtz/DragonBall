@@ -1,8 +1,39 @@
 #card{
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
     
 }
-#img_haracter{
+#info{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
+}
+.data{
+    width: 100%;
+    display: flex;
+}
+#IMG{
     width: 100px;
+    height: 200px;
+    object-fit: cover;
+}
+#img_haracter{
+    height: 100%;
+    filter: grayscale(.5);
+    transform: translateY(-25px);
+}
+#card:hover > div > img{
+    transform: scale(1.4) translateY(-30px);
+    transition: 500ms;
+    filter: drop-shadow(4px 6px 8px rgba(0, 0, 0, 0.9));
+}
+span{
+    display: block;
+    width: 100%;
 }
