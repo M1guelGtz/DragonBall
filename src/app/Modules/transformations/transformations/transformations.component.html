@@ -1,0 +1,21 @@
+<div class="carousel-container">
+    <div class="carousel">
+      <button (click)="changeCharacter(name!)">next</button>
+    </div>
+    <div class="transformations-cards">
+      <div *ngFor="let transformation of transformations()" class="card">
+        <img [src]="transformation.image" alt="{{ transformation.name }}" class="card-img" />
+        <div class="card-body">
+          <h3>{{ transformation.name }}</h3>
+          <p><strong>Ki:</strong> {{ transformation.ki }}</p>
+  
+          <form [formGroup]="editForm" (ngSubmit)="saveKi(transformation)">
+            <label for="ki">Editar Ki:</label>
+            <input id="ki" formControlName="ki" type="text" [value]="transformation.ki" />
+            <button type="submit" [disabled]="!editForm.valid">Guardar Ki</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
